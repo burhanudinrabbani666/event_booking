@@ -1,0 +1,9 @@
+POST http://localhost:8080/events
+Content-Type: application/json
+
+{
+  "name": "Cirebon Book Party",
+  "description": "Most Crowded Book Event in Indonesia",
+  "location": "Cirebon",
+  "dateTime": "2026-05-07T15:30:00.000Z"
+}
