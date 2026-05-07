@@ -101,6 +101,7 @@ func CreateEvents(ctx *gin.Context) {
 		return
 	}
 
+	// TODO: Change later
 	event.User_id = 1
 
 	err = event.Save(DB)

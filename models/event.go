@@ -8,18 +8,18 @@ import (
 )
 
 type Event struct {
-	Id          int
-	Name        string    `binding:"required"`
-	Description string    `binding:"required"`
-	Location    string    `binding:"required"`
-	Datetime    time.Time `binding:"required"`
-	User_id     int
+	Id          int       `json:"id"`
+	Name        string    `binding:"required" json:"name"`
+	Description string    `binding:"required" json:"description"`
+	Location    string    `binding:"required" json:"location"`
+	Datetime    time.Time `binding:"required" json:"datetime"`
+	User_id     int       `json:"userId"`
 }
 
 type EventCompleteData struct {
 	Event
-	CreatedAt string
-	UpdatedAt string
+	CreatedAt string `json:"createdAt"`
+	UpdatedAt string `json:"updatedAt"`
 }
 
 var events []Event = []Event{}
