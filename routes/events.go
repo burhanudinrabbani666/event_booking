@@ -96,3 +96,45 @@ func CreateEvents(ctx *gin.Context, DB *sql.DB) {
 	})
 
 }
+
+func UpdateEvent(ctx *gin.Context, DB *sql.DB) {
+	id, err := strconv.ParseInt(ctx.Param("id"), 10, 64)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, map[string]any{
+			"code":   http.StatusBadRequest,
+			"status": "BAD REQUEST!",
+		})
+		return
+	}
+
+	event, err := models.GetEventById(DB, id)
+	if err != nil {
+		fmt.Println(err)
+		ctx.JSON(http.StatusInternalServerError, map[string]any{
+			"code":   http.StatusInternalServerError,
+			"status": "FAILED GET EVENT BY ID. INTERNAL SERVER ERROR",
+			"error":  err,
+		})
+		return
+	}
+
+	if event == nil {
+		ctx.JSON(http.StatusNotFound, map[string]any{
+			"code":   http.StatusNotFound,
+			"status": "EVENT NOT FOUND",
+		})
+		return
+	}
+
+	var updateEvent models.EventCompleteData
+	err = ctx.ShouldBindJSON(&updateEvent)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, map[string]any{
+			"code":   http.StatusBadRequest,
+			"status": "FAILED UPDATE EVENT. BAD REQUEST.",
+		})
+		return
+
+	}
+
+}
