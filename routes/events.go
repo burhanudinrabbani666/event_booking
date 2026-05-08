@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -26,7 +27,7 @@ func GetEvents(ctx *gin.Context, DB *sql.DB) {
 }
 
 func GetEvent(ctx *gin.Context, DB *sql.DB) {
-	id, err := strconv.ParseInt(ctx.Param("id"), 10, 64)
+	id, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, map[string]any{
 			"code":   http.StatusBadRequest,
@@ -80,7 +81,7 @@ func CreateEvents(ctx *gin.Context, DB *sql.DB) {
 	// TODO: Change later
 	event.User_id = 1
 
-	err = event.Save(DB)
+	err = event.Create(DB)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			"code":   http.StatusBadRequest,
@@ -98,7 +99,7 @@ func CreateEvents(ctx *gin.Context, DB *sql.DB) {
 }
 
 func UpdateEvent(ctx *gin.Context, DB *sql.DB) {
-	id, err := strconv.ParseInt(ctx.Param("id"), 10, 64)
+	id, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, map[string]any{
 			"code":   http.StatusBadRequest,
@@ -134,7 +135,67 @@ func UpdateEvent(ctx *gin.Context, DB *sql.DB) {
 			"status": "FAILED UPDATE EVENT. BAD REQUEST.",
 		})
 		return
-
 	}
+
+	updateEvent.Id = id
+	updateEvent.UpdatedAt = time.Now()
+
+	err = updateEvent.Update(DB)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, map[string]any{
+			"code":   http.StatusInternalServerError,
+			"status": "FAILED UPDATE EVENT. INTERNAL SERVER ERROR.",
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, map[string]any{
+		"code":   http.StatusOK,
+		"status": "SUCCESS UPDATE EVENT.",
+		"data":   updateEvent,
+	})
+
+}
+
+func DeleteEvent(ctx *gin.Context, DB *sql.DB) {
+	id, err := strconv.Atoi(ctx.Param("id"))
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, map[string]any{
+			"code":   http.StatusBadRequest,
+			"status": "BAD REQUEST!",
+		})
+		return
+	}
+
+	event, err := models.GetEventById(DB, id)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, map[string]any{
+			"code":   http.StatusInternalServerError,
+			"status": "FAILED TO CHECK EVENT. INTERNAL SERVER ERROR!",
+		})
+		return
+	}
+
+	if event == nil {
+		ctx.JSON(http.StatusNotFound, map[string]any{
+			"code":   http.StatusNotFound,
+			"status": "FAILED TO DELETE EVENT. NOT FOUND.",
+		})
+		return
+	}
+
+	err = models.DeleteEventById(DB, id)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, map[string]any{
+			"code":   http.StatusInternalServerError,
+			"status": "FAILED TO DELETE EVENT. INTERNAL SERVER ERROR.",
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, map[string]any{
+		"code":   http.StatusOK,
+		"status": "SUCCESS DELETE EVENT!",
+	})
 
 }

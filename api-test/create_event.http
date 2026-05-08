@@ -2,8 +2,8 @@ POST http://localhost:8080/events
 Content-Type: application/json
 
 {
-  "name": "Anime Time",
-  "description": "Event Cosplay",
-  "location": "Majalengka",
+  "name": "Demo Jokowi",
+  "description": "Acara Demo Ijazah palsu Jokowi",
+  "location": "Solo",
   "dateTime": "2026-05-08T15:30:00.000Z"
 }
