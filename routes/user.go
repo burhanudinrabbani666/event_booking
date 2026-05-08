@@ -3,6 +3,7 @@ package routes
 import (
 	"database/sql"
 	"event_booking/models"
+	"event_booking/utils"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -65,9 +66,20 @@ func Login(ctx *gin.Context, DB *sql.DB) {
 		return
 	}
 
+	token, err := utils.GenerateToken(user.Email, user.Id)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"code":   http.StatusInternalServerError,
+			"status": "FAILED TO LOGIN, INTERNAL SERVER ERROR.",
+		})
+		return
+
+	}
+
 	ctx.JSON(http.StatusOK, gin.H{
 		"code":   http.StatusOK,
 		"status": "SUCCESS TO LOGIN.",
+		"token":  token,
 	})
 
 }

@@ -39,14 +39,14 @@ func (user *User) SignUp(DB *sql.DB) error {
 	return nil
 }
 
-func (user User) ValidateCredential(DB *sql.DB) (bool, error) {
+func (user *User) ValidateCredential(DB *sql.DB) (bool, error) {
 	query := `
-		select password
+		select id, password
 		from users
 		where email = $1
 	`
 	var retrivedPassword string
-	err := DB.QueryRow(query, user.Email).Scan(&retrivedPassword)
+	err := DB.QueryRow(query, user.Email).Scan(&user.Id, &retrivedPassword)
 	if err != nil {
 		if err == sql.ErrNoRows {
 			return false, nil
