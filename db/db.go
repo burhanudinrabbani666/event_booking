@@ -47,6 +47,18 @@ func InitDB() (*sql.DB, error) {
 }
 
 func CreateTable(db *sql.DB) error {
+	createUserTable := `
+		CREATE TABLE IF NOT EXISTS users(
+			id 				SERIAL PRIMARY KEY,
+			email 		TEXT NOT NULL UNIQUE,
+			password	TEXT NOT NULL
+		)
+	`
+	_, err := db.Exec(createUserTable)
+	if err != nil {
+		fmt.Println("Could not Create Users Table", err)
+		return err
+	}
 
 	createEventsTable := `
 		CREATE TABLE IF NOT EXISTS events(
@@ -55,15 +67,15 @@ func CreateTable(db *sql.DB) error {
 			description TEXT NOT NULL,
 			location 		VARCHAR(255) NOT NULL,
 			dateTime 		TIMESTAMP WITH TIME ZONE NOT NULL,
-			user_id 		INTEGER,
+			user_id 		INT REFERENCES users (id) ON DELETE SET NULL,
 			createdAt 	TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
 			updatedAt 	TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 		);
 	`
 
-	_, err := db.Exec(createEventsTable)
+	_, err = db.Exec(createEventsTable)
 	if err != nil {
-		fmt.Println("Could not Create Table", err)
+		fmt.Println("Could not Create Events Table", err)
 		return err
 	}
 
