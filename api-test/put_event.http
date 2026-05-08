@@ -1,0 +1,10 @@
+
+PUT  http://localhost:8080/events/1
+Content-Type: application/json
+
+{
+  "name": "Metal head With Baby Metal",
+  "description": "Cirebon Super Music Event",
+  "location": "Cirebon",
+  "datetime": "2026-05-07T15:30:00Z"
+} 
