@@ -13,7 +13,7 @@ import (
 // @title           Event Booking API
 // @version         1.0
 // @description     REST API untuk manajemen event dan registrasi
-// @host            localhost:8080
+// @host            event-bookings.burhanudin.com
 // @BasePath        /
 
 // @securityDefinitions.apikey BearerAuth
