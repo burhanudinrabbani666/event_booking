@@ -24,7 +24,9 @@ func Authentication(ctx *gin.Context) {
 			"status": "NOT AUTHORIZED! TOKEN NOT VALID.",
 		})
 		return
-
 	}
+
+	ctx.Set("userId", userId)
+	ctx.Next()
 
 }

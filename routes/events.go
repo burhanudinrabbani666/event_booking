@@ -3,7 +3,6 @@ package routes
 import (
 	"database/sql"
 	"event_booking/models"
-	"event_booking/utils"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -66,28 +65,9 @@ func GetEvent(ctx *gin.Context, DB *sql.DB) {
 }
 
 func CreateEvents(ctx *gin.Context, DB *sql.DB) {
-	// Get token From header
-	token := ctx.Request.Header.Get("Authorization")
-	if token == "" {
-		ctx.JSON(http.StatusUnauthorized, gin.H{
-			"code":   http.StatusUnauthorized,
-			"status": "NOT AUTHORIZED!",
-		})
-		return
-	}
-
-	userId, err := utils.VerifyToken(token)
-	if err != nil {
-		ctx.JSON(http.StatusUnauthorized, gin.H{
-			"code":   http.StatusUnauthorized,
-			"status": "NOT AUTHORIZED! TOKEN NOT VALID.",
-		})
-		return
-
-	}
 
 	var event models.Event
-	err = ctx.ShouldBindJSON(&event)
+	err := ctx.ShouldBindJSON(&event)
 
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
@@ -100,6 +80,7 @@ func CreateEvents(ctx *gin.Context, DB *sql.DB) {
 	}
 
 	// TODO: Change later
+	userId := ctx.GetInt("userId")
 	event.UserId = userId
 
 	err = event.Create(DB)
