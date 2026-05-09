@@ -174,3 +174,43 @@ func DeleteEventById(DB *sql.DB, id int) error {
 	return nil
 
 }
+
+func (event *Event) Register(userId int, DB *sql.DB) error {
+	query := `
+		INSERT INTO registrations (event_id, user_id)
+		VALUES ($1, $2);
+	`
+
+	stmt, err := DB.Prepare(query)
+	if err != nil {
+		return err
+	}
+	defer stmt.Close()
+
+	_, err = stmt.Exec(event.Id, userId)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (event Event) CancelRegister(userId int, DB *sql.DB) error {
+	query := `
+		delete from registrations
+		WHERE event_id =  $1  AND user_id = $2;
+	`
+	stmt, err := DB.Prepare(query)
+	if err != nil {
+		return err
+	}
+	defer stmt.Close()
+
+	_, err = stmt.Exec(event.Id, userId)
+	if err != nil {
+		return err
+	}
+
+	return nil
+
+}

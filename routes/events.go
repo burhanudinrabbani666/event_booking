@@ -102,7 +102,7 @@ func CreateEvents(ctx *gin.Context, DB *sql.DB) {
 }
 
 func UpdateEvent(ctx *gin.Context, DB *sql.DB) {
-	id, err := strconv.Atoi(ctx.Param("id"))
+	eventId, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, map[string]any{
 			"code":   http.StatusBadRequest,
@@ -111,7 +111,7 @@ func UpdateEvent(ctx *gin.Context, DB *sql.DB) {
 		return
 	}
 
-	event, err := models.GetEventById(DB, id)
+	event, err := models.GetEventById(DB, eventId)
 	if err != nil {
 		fmt.Println(err)
 		ctx.JSON(http.StatusInternalServerError, map[string]any{
@@ -152,7 +152,7 @@ func UpdateEvent(ctx *gin.Context, DB *sql.DB) {
 		return
 	}
 
-	updateEvent.Id = id
+	updateEvent.Id = eventId
 	now := time.Now()
 	updateEvent.UpdatedAt = &now
 

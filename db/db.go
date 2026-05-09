@@ -49,7 +49,7 @@ func InitDB() (*sql.DB, error) {
 func CreateTable(db *sql.DB) error {
 	createUserTable := `
 		CREATE TABLE IF NOT EXISTS users(
-			id 				SERIAL PRIMARY KEY,
+			id 			SERIAL PRIMARY KEY,
 			email 		TEXT NOT NULL UNIQUE,
 			password	TEXT NOT NULL
 		)
@@ -62,14 +62,14 @@ func CreateTable(db *sql.DB) error {
 
 	createEventsTable := `
 		CREATE TABLE IF NOT EXISTS events(
-			id 					SERIAL PRIMARY KEY,
-			name 				VARCHAR(225) NOT NULL,
-			description TEXT NOT NULL,
+			id 				SERIAL PRIMARY KEY,
+			name 			VARCHAR(225) NOT NULL,
+			description 	TEXT NOT NULL,
 			location 		VARCHAR(255) NOT NULL,
 			dateTime 		TIMESTAMP WITH TIME ZONE NOT NULL,
 			user_id 		INT REFERENCES users (id) ON DELETE SET NULL,
-			createdAt 	TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-			updatedAt 	TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+			createdAt 		TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+			updatedAt 		TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 		);
 	`
 
@@ -81,9 +81,9 @@ func CreateTable(db *sql.DB) error {
 
 	creatRegistrationsTable := `
 		CREATE TABLE IF NOT EXISTS registrations(
-			id SERIAL PRIMARY KEY,
-			event_id INT REFERENCES events(id),  
-			user_id INT REFERENCES users(id), 
+			id 			SERIAL PRIMARY KEY,
+			event_id	INT REFERENCES events(id),  
+			user_id 	INT REFERENCES users(id), 
 			createdAt 	TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
 			updatedAt 	TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 		);
