@@ -12,8 +12,8 @@ func InitDB() (*sql.DB, error) {
 	cfg := pq.Config{
 		Host:           "localhost",
 		Port:           5432,
-		User:           "root",
-		Password:       "root",
+		User:           "rabbani",
+		Password:       "rabbani",
 		Database:       "event_bookings",
 		ConnectTimeout: 5 * time.Second,
 		SSLMode:        pq.SSLModeDisable,

@@ -8,7 +8,7 @@
       "askForPassword": true,
       "driver": "PostgreSQL",
       "database": "event_bookings",
-      "username": "root",
+      "username": "rabbani",
       "name": "psql_golang"
     }
   ]

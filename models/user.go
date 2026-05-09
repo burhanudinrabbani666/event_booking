@@ -3,7 +3,6 @@ package models
 import (
 	"database/sql"
 	"event_booking/utils"
-	"fmt"
 )
 
 type User struct {
@@ -20,7 +19,6 @@ func (user *User) SignUp(DB *sql.DB) error {
 	`
 	stmt, err := DB.Prepare(query)
 	if err != nil {
-		fmt.Println(err)
 		return err
 	}
 	defer stmt.Close()
@@ -32,7 +30,6 @@ func (user *User) SignUp(DB *sql.DB) error {
 
 	err = stmt.QueryRow(user.Email, user.Password).Scan(&user.Id)
 	if err != nil {
-		fmt.Println(err)
 		return err
 	}
 

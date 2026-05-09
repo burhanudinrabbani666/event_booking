@@ -65,6 +65,17 @@ func GetEvent(ctx *gin.Context, DB *sql.DB) {
 }
 
 func CreateEvents(ctx *gin.Context, DB *sql.DB) {
+	// Get token From header
+	token := ctx.Request.Header.Get("Authorization")
+	if token == "" {
+		ctx.JSON(http.StatusUnauthorized, gin.H{
+			"code":   http.StatusUnauthorized,
+			"status": "NOT AUTHORIZED!",
+		})
+
+		return
+
+	}
 
 	var event models.Event
 	err := ctx.ShouldBindJSON(&event)
@@ -73,6 +84,7 @@ func CreateEvents(ctx *gin.Context, DB *sql.DB) {
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			"code":   http.StatusBadRequest,
 			"status": "FAILED TO CREATE EVENT!",
+			"error":  err,
 		})
 
 		return
@@ -86,6 +98,7 @@ func CreateEvents(ctx *gin.Context, DB *sql.DB) {
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			"code":   http.StatusBadRequest,
 			"status": "FAILED TO CREATE EVENT!",
+			"error":  err,
 		})
 		return
 	}
@@ -138,7 +151,8 @@ func UpdateEvent(ctx *gin.Context, DB *sql.DB) {
 	}
 
 	updateEvent.Id = id
-	updateEvent.UpdatedAt = time.Now()
+	now := time.Now()
+	updateEvent.UpdatedAt = &now
 
 	err = updateEvent.Update(DB)
 	if err != nil {
