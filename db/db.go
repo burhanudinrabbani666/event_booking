@@ -3,35 +3,27 @@ package db
 import (
 	"database/sql"
 	"fmt"
+	"os"
 	"time"
 
-	"github.com/lib/pq"
+	_ "github.com/lib/pq"
 )
 
 func InitDB() (*sql.DB, error) {
-	cfg := pq.Config{
-		Host:           "localhost",
-		Port:           5432,
-		User:           "rabbani",
-		Password:       "rabbani",
-		Database:       "event_bookings",
-		ConnectTimeout: 5 * time.Second,
-		SSLMode:        pq.SSLModeDisable,
+
+	dsn := os.Getenv("DATABASE_URL")
+	if dsn == "" {
+		dsn = "postgres://rabbani:rabbani@localhost:5432/event_bookings?sslmode=disable"
 	}
 
-	conn, err := pq.NewConnectorConfig(cfg)
+	db, err := sql.Open("postgres", dsn)
+
 	if err != nil {
-		fmt.Println("Failed connect To Database")
-		fmt.Println(err)
-
-		return nil, err
+		return nil, fmt.Errorf("failed to open db: %w", err)
 	}
-
-	db := sql.OpenDB(conn)
 
 	if err = db.Ping(); err != nil {
-		fmt.Println("Failed connect to Database", err)
-		return nil, err
+		return nil, fmt.Errorf("Failed to open Database: %w", err)
 	}
 
 	db.SetMaxOpenConns(10)

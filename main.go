@@ -5,6 +5,7 @@ import (
 	"event_booking/routes"
 	"fmt"
 	"log"
+	"os"
 
 	"github.com/gin-gonic/gin"
 )
@@ -20,8 +21,12 @@ func main() {
 	server := gin.Default()
 	routes.RegisterRoutes(server, DB)
 
-	err = server.Run(":8080")
-	if err != nil {
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+
+	if err = server.Run(":" + port); err != nil {
 		panic(err)
 	}
 

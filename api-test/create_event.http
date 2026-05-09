@@ -1,10 +1,10 @@
 POST http://localhost:8080/events
 Content-Type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRvZG9AZXhhbXBsZS5pbyIsImV4cCI6MTc3ODI5NjA2NywidXNlcklkIjoyfQ._yeALK2-CFN1B8zb9gFz-m7jIOHn0p-TAxUHYkTcBUM
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhlbGxvQGV4YW1wbGUuaW8iLCJleHAiOjE3NzgzMDg5MTAsInVzZXJJZCI6M30.CVA3R1rxzLGRsOIoWDobyCtTYVgK9JJDpT8G-9LHCCo
 
 {
-  "name": "Golang",
-  "description": "Golang events",
+  "name": "Test Deployment",
+  "description": "Ke Railway",
   "location": "Majalengka",
   "datetime": "2026-05-09T15:30:00.000Z"
 }
