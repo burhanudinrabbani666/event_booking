@@ -1,9 +1,10 @@
 POST http://localhost:8080/events
 Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJhbmlAZXhhbXBsZS5pbyIsImV4cCI6MTc3ODI5NTU1OCwidXNlcklkIjoxfQ.8vhEkAym_sHU-Ngh3nTRaSBBkXtnHvk-Po9U1R6tWyY
 
 {
-  "name": "Demo Jokowi",
-  "description": "Acara Demo Ijazah palsu Jokowi",
-  "location": "Solo",
-  "datetime": "2026-05-08T15:30:00.000Z"
+  "name": "BabyMetal Live Cirebon",
+  "description": "Baby metal Indonesia tour 2026",
+  "location": "Cirebon",
+  "datetime": "2026-05-09T15:30:00.000Z"
 }

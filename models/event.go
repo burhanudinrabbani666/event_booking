@@ -13,7 +13,7 @@ type Event struct {
 	Description string     `binding:"required" json:"description"`
 	Location    string     `binding:"required" json:"location"`
 	Datetime    *time.Time `binding:"required" json:"datetime"`
-	User_id     int        `json:"userId,omitempty"`
+	UserId      int        `json:"userId,omitempty"`
 }
 
 type EventCompleteData struct {
@@ -44,7 +44,7 @@ func (event *Event) Create(DB *sql.DB) error {
 		event.Description,
 		event.Location,
 		event.Datetime,
-		event.User_id,
+		event.UserId,
 	).Scan(&event.Id)
 
 	if err != nil {
@@ -74,7 +74,7 @@ func GetAllEvents(DB *sql.DB) ([]EventCompleteData, error) {
 			&event.Description,
 			&event.Location,
 			&event.Datetime,
-			&event.User_id,
+			&event.UserId,
 			&event.CreatedAt,
 			&event.UpdatedAt,
 		)
@@ -110,7 +110,7 @@ func GetEventById(DB *sql.DB, id int) (*EventCompleteData, error) {
 		&event.Description,
 		&event.Location,
 		&event.Datetime,
-		&event.User_id,
+		&event.UserId,
 		&event.CreatedAt,
 		&event.UpdatedAt,
 	)
