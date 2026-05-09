@@ -76,7 +76,7 @@ func CreateEvents(ctx *gin.Context, DB *sql.DB) {
 		return
 	}
 
-	err := utils.VerifyToken(token)
+	userId, err := utils.VerifyToken(token)
 	if err != nil {
 		ctx.JSON(http.StatusUnauthorized, gin.H{
 			"code":   http.StatusUnauthorized,
@@ -100,7 +100,7 @@ func CreateEvents(ctx *gin.Context, DB *sql.DB) {
 	}
 
 	// TODO: Change later
-	event.UserId = 1
+	event.UserId = userId
 
 	err = event.Create(DB)
 	if err != nil {

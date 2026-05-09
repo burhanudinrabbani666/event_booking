@@ -33,7 +33,6 @@ func (event *Event) Create(DB *sql.DB) error {
 
 	stmt, err := DB.Prepare(query)
 	if err != nil {
-		fmt.Println(err)
 		return err
 	}
 
