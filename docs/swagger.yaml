@@ -32,7 +32,7 @@ definitions:
     - email
     - password
     type: object
-host: localhost:8080
+host: event-bookings.burhanudin.com
 info:
   contact: {}
   description: REST API untuk manajemen event dan registrasi
