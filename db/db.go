@@ -79,5 +79,21 @@ func CreateTable(db *sql.DB) error {
 		return err
 	}
 
+	creatRegistrationsTable := `
+		CREATE TABLE IF NOT EXISTS registrations(
+			id SERIAL PRIMARY KEY,
+			event_id INT REFERENCES events(id),  
+			user_id INT REFERENCES users(id), 
+			createdAt 	TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+			updatedAt 	TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+		);
+	`
+
+	_, err = db.Exec(creatRegistrationsTable)
+	if err != nil {
+		fmt.Println("Could not Create Registations Table", err)
+		return err
+	}
+
 	return nil
 }

@@ -130,6 +130,18 @@ func UpdateEvent(ctx *gin.Context, DB *sql.DB) {
 		return
 	}
 
+	userId := ctx.GetInt("userId")
+	if userId != event.UserId {
+		ctx.JSON(http.StatusUnauthorized, map[string]any{
+			"code":     http.StatusUnauthorized,
+			"status":   "NOT AUTHORIZED FOR UPDATED EVENT!",
+			"expected": event.UserId,
+			"insert":   userId,
+		})
+		return
+
+	}
+
 	var updateEvent models.EventCompleteData
 	err = ctx.ShouldBindJSON(&updateEvent)
 	if err != nil {
@@ -186,6 +198,16 @@ func DeleteEvent(ctx *gin.Context, DB *sql.DB) {
 			"status": "FAILED TO DELETE EVENT. NOT FOUND.",
 		})
 		return
+	}
+
+	userId := ctx.GetInt("userId")
+	if userId != event.UserId {
+		ctx.JSON(http.StatusUnauthorized, map[string]any{
+			"code":   http.StatusUnauthorized,
+			"status": "NOT AUTHORIZED FOR UPDATED EVENT!",
+		})
+		return
+
 	}
 
 	err = models.DeleteEventById(DB, id)

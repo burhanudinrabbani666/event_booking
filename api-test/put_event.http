@@ -1,6 +1,7 @@
 
-PUT  http://localhost:8080/events/1
+PUT  http://localhost:8080/events/11
 Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRvZG9AZXhhbXBsZS5pbyIsImV4cCI6MTc3ODI5NzgyMCwidXNlcklkIjoyfQ.38uacxjOBOg3358O2XXdNhdYb21OJ7eh0VfZkbonRFA
 
 {
   "name": "Metal head With Baby Metal",
