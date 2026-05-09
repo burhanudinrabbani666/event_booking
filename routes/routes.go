@@ -2,9 +2,12 @@ package routes
 
 import (
 	"database/sql"
+	_ "event_booking/docs" // hasil swag init
 	"event_booking/middleware"
 
 	"github.com/gin-gonic/gin"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 //
@@ -23,4 +26,7 @@ func RegisterRoutes(server *gin.Engine, DB *sql.DB) {
 
 	server.POST("/signup", func(ctx *gin.Context) { Signup(ctx, DB) })
 	server.POST("/login", func(ctx *gin.Context) { Login(ctx, DB) })
+
+	// Swagger
+	server.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 }

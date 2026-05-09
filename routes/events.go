@@ -11,6 +11,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// GetEvents godoc
+// @Summary      Get All event
+// @Tags         Events
+// @Produce      json
+// @Success      200 {array}  models.Event
+// @Failure      500 {object} map[string]any
+// @Router       /events [get]
 func GetEvents(ctx *gin.Context, DB *sql.DB) {
 
 	events, err := models.GetAllEvents(DB)
@@ -26,6 +33,16 @@ func GetEvents(ctx *gin.Context, DB *sql.DB) {
 	ctx.JSON(http.StatusOK, events)
 }
 
+// GetEvent godoc
+// @Summary      Get event by ID
+// @Tags         Events
+// @Produce      json
+// @Param        id   path      int  true  "Event ID"
+// @Success      200  {object}  models.Event
+// @Failure      400  {object}  map[string]any
+// @Failure      404  {object}  map[string]any
+// @Failure      500  {object}  map[string]any
+// @Router       /events/{id} [get]
 func GetEvent(ctx *gin.Context, DB *sql.DB) {
 	id, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
@@ -64,6 +81,16 @@ func GetEvent(ctx *gin.Context, DB *sql.DB) {
 
 }
 
+// CreateEvents godoc
+// @Summary      Buat event baru
+// @Tags         Events
+// @Security     BearerAuth
+// @Accept       json
+// @Produce      json
+// @Param        body  body      models.Event  true  "Event data"
+// @Success      201   {object}  models.Event
+// @Failure      400   {object}  map[string]any
+// @Router       /events [post]
 func CreateEvents(ctx *gin.Context, DB *sql.DB) {
 
 	var event models.Event
@@ -101,6 +128,20 @@ func CreateEvents(ctx *gin.Context, DB *sql.DB) {
 
 }
 
+// UpdateEvent godoc
+// @Summary      Update event
+// @Tags         Events
+// @Security     BearerAuth
+// @Accept       json
+// @Produce      json
+// @Param        id    path      int           true  "Event ID"
+// @Param        body  body      models.Event  true  "Event data"
+// @Success      200   {object}  models.Event
+// @Failure      400   {object}  map[string]any
+// @Failure      401   {object}  map[string]any
+// @Failure      404   {object}  map[string]any
+// @Failure      500   {object}  map[string]any
+// @Router       /events/{id} [put]
 func UpdateEvent(ctx *gin.Context, DB *sql.DB) {
 	eventId, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
@@ -173,6 +214,18 @@ func UpdateEvent(ctx *gin.Context, DB *sql.DB) {
 
 }
 
+// DeleteEvent godoc
+// @Summary      Hapus event
+// @Tags         Events
+// @Security     BearerAuth
+// @Produce      json
+// @Param        id   path      int  true  "Event ID"
+// @Success      200  {object}  map[string]any
+// @Failure      400  {object}  map[string]any
+// @Failure      401  {object}  map[string]any
+// @Failure      404  {object}  map[string]any
+// @Failure      500  {object}  map[string]any
+// @Router       /events/{id} [delete]
 func DeleteEvent(ctx *gin.Context, DB *sql.DB) {
 	id, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {

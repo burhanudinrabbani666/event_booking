@@ -10,6 +10,16 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// @title           Event Booking API
+// @version         1.0
+// @description     REST API untuk manajemen event dan registrasi
+// @host            localhost:8080
+// @BasePath        /
+
+// @securityDefinitions.apikey BearerAuth
+// @in header
+// @name Authorization
+
 func main() {
 	DB, err := db.InitDB()
 	if err != nil {

@@ -9,6 +9,15 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// Signup godoc
+// @Summary      Signup new User
+// @Tags         Auth
+// @Accept		 json
+// @Param        body   body    models.User true "User Data"
+// @Success      200  {object}  map[string]any
+// @Failure      400  {object}  map[string]any
+// @Failure      500  {object}  map[string]any
+// @Router       /signup [post]
 func Signup(ctx *gin.Context, DB *sql.DB) {
 	var user models.User
 	err := ctx.ShouldBindJSON(&user)
@@ -37,6 +46,17 @@ func Signup(ctx *gin.Context, DB *sql.DB) {
 
 }
 
+// Login godoc
+// @Summary      Login User
+// @Tags         Auth
+// @Accept		 json
+// @Produce		 json
+// @Param        body   body    models.User true "User Data"
+// @Success      200  {object}  map[string]any
+// @Failure      400  {object}  map[string]any
+// @Failure      401  {object}  map[string]any
+// @Failure      500  {object}  map[string]any
+// @Router       /login [post]
 func Login(ctx *gin.Context, DB *sql.DB) {
 	var user models.User
 	err := ctx.ShouldBindJSON(&user)

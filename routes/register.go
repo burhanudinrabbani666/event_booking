@@ -9,6 +9,18 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// RegisterForEvent godoc
+// @Summary      Register ke event
+// @Tags         Registrations
+// @Security     BearerAuth
+// @Produce      json
+// @Param        id    path      int  true  "Event ID"
+// @Success      201   {object}  map[string]any
+// @Failure      400   {object}  map[string]any
+// @Failure      401   {object}  map[string]any
+// @Failure      404   {object}  map[string]any
+// @Failure      500   {object}  map[string]any
+// @Router       /events/{id}/register [post]
 func RegisterForEvent(ctx *gin.Context, DB *sql.DB) {
 	userId := ctx.GetInt("userId")
 	eventId, err := strconv.Atoi(ctx.Param("id"))
@@ -53,6 +65,16 @@ func RegisterForEvent(ctx *gin.Context, DB *sql.DB) {
 
 }
 
+// CancelForEvent godoc
+// @Summary      Batalkan registrasi event
+// @Tags         Registrations
+// @Security     BearerAuth
+// @Produce      json
+// @Param        id    path      int  true  "Event ID"
+// @Success      200   {object}  map[string]any
+// @Failure      400   {object}  map[string]any
+// @Failure      500   {object}  map[string]any
+// @Router       /events/{id}/register [delete]
 func CancelForEvent(ctx *gin.Context, DB *sql.DB) {
 	userId := ctx.GetInt("userId")
 	eventId, err := strconv.Atoi(ctx.Param("id"))
@@ -76,8 +98,8 @@ func CancelForEvent(ctx *gin.Context, DB *sql.DB) {
 		return
 	}
 
-	ctx.JSON(http.StatusCreated, map[string]any{
-		"code":   http.StatusCreated,
+	ctx.JSON(http.StatusOK, map[string]any{
+		"code":   http.StatusOK,
 		"status": "SUCCESS CANCEL REGISTER.",
 	})
 
